@@ -1,5 +1,5 @@
 require! <[tiny-lr]>
-require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue]>
+require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue gulp-if]>
 gutil = gulp-util
 {protractor, webdriver_update} = require 'gulp-protractor'
 
@@ -7,6 +7,9 @@ livereload-server = require('tiny-lr')!
 livereload = -> gulp-livereload livereload-server
 
 var http-server
+production = true if gutil.env.env is \production
+# replace your google analytics id here
+google-analytics = 'UA-blah-blah' if gutil.env.env is \production
 
 gulp.task 'httpServer' ->
   require! express
@@ -100,12 +103,17 @@ gulp.task 'template' <[index]> ->
     .pipe livereload!
 
 gulp.task 'index' ->
+  pretty = 'yes' if gutil.env.env isnt \production
+
   gulp.src ['app/*.jade']
-    .pipe gulp-jade!
+    .pipe gulp-jade do
+      pretty: pretty
+      locals:
+        googleAnalytics: google-analytics
     .pipe gulp.dest '_public'
     .pipe livereload!
 
-require! <[gulp-bower gulp-bower-files gulp-filter gulp-uglify gulp-cssmin]>
+require! <[gulp-bower gulp-bower-files gulp-filter gulp-uglify gulp-csso]>
 require! <[gulp-concat gulp-json-editor gulp-commonjs gulp-insert]>
 
 gulp.task 'bower' ->
@@ -126,8 +134,8 @@ gulp.task 'js:app' ->
   s = streamqueue { +objectMode }
     .done env, app
     .pipe gulp-concat 'app.js'
-  s .= pipe gulp-uglify! if gutil.env.env is 'production'
-  s.pipe gulp.dest '_public/js'
+    .pipe gulp-if production, gulp-uglify!
+    .pipe gulp.dest '_public/js'
 
 gulp.task 'js:vendor' <[bower]> ->
   bower = gulp-bower-files!
@@ -136,8 +144,8 @@ gulp.task 'js:vendor' <[bower]> ->
   s = streamqueue { +objectMode }
     .done bower, gulp.src 'vendor/scripts/*.js'
     .pipe gulp-concat 'vendor.js'
-  s .= pipe gulp-uglify! if gutil.env.env is 'production'
-  s .pipe gulp.dest '_public/js'
+    .pipe gulp-if production, gulp-uglify!
+    .pipe gulp.dest '_public/js'
     .pipe livereload!
 
 gulp.task 'css' <[bower]> ->
@@ -151,8 +159,8 @@ gulp.task 'css' <[bower]> ->
   s = streamqueue { +objectMode }
     .done bower, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
-  s .= pipe gulp-cssmin! if gutil.env.env is 'production'
-  s .pipe gulp.dest './_public/css'
+    .pipe gulp-if production, gulp-csso!
+    .pipe gulp.dest './_public/css'
     .pipe livereload!
 
 gulp.task 'assets' ->
