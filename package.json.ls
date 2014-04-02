@@ -14,7 +14,7 @@ scripts:
   republish: 'lsc -cj package.json.ls && lsc -cj bower.json.ls'
   build: 'gulp --require LiveScript build'
   dev: 'gulp --require LiveScript dev'
-  test: 'gulp --require LiveScript build test:unit'
+  test: 'gulp --require LiveScript test:unit'
   protractor: 'gulp --require LiveScript test:e2e'
 dependencies: {}
 devDependencies:
@@ -43,7 +43,7 @@ devDependencies:
   "gulp-bower": '~0.0.2'
   "gulp-bower-files": '>= 0.1.8'
   "gulp-uglify": '~0.2.1'
-  "gulp-cssmin": '~0.1.0'
+  "gulp-csso": '~0.2.6'
   "gulp-filter": '~0.2.1'
   "gulp-mocha": '~0.4.1'
   "gulp-karma": '^0.0.4'
@@ -53,3 +53,4 @@ devDependencies:
   "gulp-insert": "^0.2.0"
   "connect-livereload": '~0.3.2'
   "tiny-lr": '~0.0.5'
+  'gulp-if': '~0.0.5'
