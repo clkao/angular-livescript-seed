@@ -1,23 +1,20 @@
 {
-  "author": "Chia-liang Kao",
-  "name": "angular-livescript-seed",
-  "description": "ultra-modern angular seed with livescript",
-  "version": "0.2.0",
-  "homepage": "https://github.com/clkao/angular-livescript-seed",
+  "author": "Isaac Shapira",
+  "name": "AngularPIXI",
+  "description": "PIXI based rendering in Angular",
+  "version": "0.0.0"
   "repository": {
     "type": "git",
-    "url": "https://github.com/clkao/angular-livescript-seed"
+    "url": "https://github.com/CapillarySoftware/angularPIXI.git"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.3.x"
   },
   "scripts": {
-    "republish": "lsc -cj package.json.ls && lsc -cj bower.json.ls",
     "build": "gulp --require LiveScript build",
     "dev": "gulp --require LiveScript dev",
-    "test": "gulp --require LiveScript test:unit",
-    "protractor": "gulp --require LiveScript test:e2e"
+    "test": "gulp --require LiveScript test:unit"
   },
   "dependencies": {},
   "devDependencies": {
@@ -27,22 +24,18 @@
     "karma-live-preprocessor": ">= 0.2.2",
     "karma-mocha": "~0.1.0",
     "karma-chai": "~0.0.2",
-    "karma-ng-scenario": "0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
     "bower": "1.3.x",
     "mocha": "~1.14.0",
     "chai": "~1.8.0",
-    "protractor": "~0.18.1",
     "streamqueue": "~0.0.5",
     "gulp": "~3.5.0",
     "gulp-util": "~2.2.13",
     "gulp-exec": "~1.0.4",
-    "gulp-protractor": "^0.0.7",
     "gulp-livescript": "~0.1.1",
     "gulp-stylus": "~0.0.12",
     "gulp-concat": "~2.1.7",
     "gulp-jade": "~0.4.1",
-    "gulp-angular-templatecache": "^1.1.0",
     "gulp-bower": "~0.0.2",
     "gulp-bower-files": ">= 0.1.8",
     "gulp-uglify": "~0.2.1",
