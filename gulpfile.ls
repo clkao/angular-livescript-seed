@@ -1,7 +1,6 @@
 require! <[tiny-lr]>
 require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue gulp-if]>
 gutil = gulp-util
-{protractor, webdriver_update} = require 'gulp-protractor'
 
 livereload-server = require('tiny-lr')!
 livereload = -> gulp-livereload livereload-server
@@ -53,15 +52,10 @@ gulp.task 'dev' <[httpServer template assets js:vendor js:app css]> ->
   gulp.watch 'app/assets/**' <[assets]>
   gulp.watch 'app/**/*.styl' <[css]>
 
-require! <[gulp-angular-templatecache gulp-jade]>
+require! <[gulp-jade]>
 gulp.task 'template' <[index]> ->
   gulp.src ['app/partials/**/*.jade']
     .pipe gulp-jade!
-    .pipe gulp-angular-templatecache 'app.templates.js' do
-      base: process.cwd()
-      filename: 'app.templates.js'
-      module: 'app.templates'
-      standalone: true
     .pipe gulp.dest '_public/js'
     .pipe livereload!
 
