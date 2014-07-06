@@ -2,22 +2,19 @@
   "author": "Isaac Shapira",
   "name": "AngularPIXI",
   "description": "PIXI based rendering in Angular",
-  "version": "0.0.0",
-  "homepage": "https://github.com/clkao/angular-livescript-seed",
+  "version": "0.0.0"
   "repository": {
     "type": "git",
-    "url": "https://github.com/clkao/angular-livescript-seed"
+    "url": "https://github.com/CapillarySoftware/angularPIXI.git"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.3.x"
   },
   "scripts": {
-    "republish": "lsc -cj package.json.ls && lsc -cj bower.json.ls",
     "build": "gulp --require LiveScript build",
     "dev": "gulp --require LiveScript dev",
-    "test": "gulp --require LiveScript test:unit",
-    "protractor": "gulp --require LiveScript test:e2e"
+    "test": "gulp --require LiveScript test:unit"
   },
   "dependencies": {},
   "devDependencies": {
