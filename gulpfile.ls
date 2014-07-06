@@ -24,46 +24,9 @@ gulp.task 'httpServer' ->
   http-server.listen port, ->
     console.log "Running on http://localhost:#port"
 
-gulp.task 'webdriver_update' webdriver_update
-
-gulp.task 'protractor' <[webdriver_update httpServer]> ->
-  gulp.src ["./test/e2e/app/*.ls"]
-    .pipe protractor configFile: "./test/protractor.conf.ls"
-    .on 'error' ->
-      throw it
-
-gulp.task 'test:e2e' <[protractor]> ->
-  httpServer.close!
-
-gulp.task 'protractor:sauce' <[webdriver_update build httpServer]> ->
-  args =
-    '--selenium-address'
-    ''
-    '--sauce-user'
-    process.env.SAUCE_USERNAME
-    '--sauce-key'
-    process.env.SAUCE_ACCESS_KEY
-    '--capabilities.build'
-    process.env.TRAVIS_BUILD_NUMBER
-  if process.env.TRAVIS_JOB_NUMBER
-    #args['capabilities.tunnel-identifier'] = that
-    args.push '--capabilities.tunnel-identifier'
-    args.push that
-
-  gulp.src ["./test/e2e/app/*.ls"]
-    .pipe protractor do
-      configFile: "./test/protractor.conf.ls"
-      args: args
-    .on 'error' ->
-      throw it
-
-gulp.task 'test:sauce' <[protractor:sauce]> ->
-  httpServer.close!
-
 gulp.task 'build' <[template bower assets js:vendor js:app css]>
 
-gulp.task 'test:unit' <[build]> ->
-  gulp.start 'test:karma'
+gulp.task 'test:unit' <[build]> -> gulp.start 'test:karma'
 
 gulp.task 'test:karma' ->
   gulp.src [
@@ -129,7 +92,7 @@ gulp.task 'js:app' ->
     .pipe gulp-commonjs!
 
   app = gulp.src 'app/**/*.ls'
-    .pipe gulp-livescript({+bare}).on 'error', gutil.log
+    .pipe gulp-livescript({+bare,const:true}).on 'error', gutil.log
 
   s = streamqueue { +objectMode }
     .done env, app

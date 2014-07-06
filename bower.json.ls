@@ -6,7 +6,6 @@ main: "_public/js/app.js"
 ignore: ["**/.*", "node_modules", "components"]
 dependencies:
   "commonjs-require-definition": "~0.1.2"
-  jquery: "~2.0.3"
   angular: "1.2.14"
   "angular-mocks": "1.2.14"
   "angular-scenario": "1.2.14"
