@@ -1,8 +1,8 @@
 {
-  "author": "Chia-liang Kao",
-  "name": "angular-livescript-seed",
-  "description": "ultra-modern angular seed with livescript",
-  "version": "0.2.0",
+  "author": "Isaac Shapira",
+  "name": "AngularPIXI",
+  "description": "PIXI based rendering in Angular",
+  "version": "0.0.0",
   "homepage": "https://github.com/clkao/angular-livescript-seed",
   "repository": {
     "type": "git",

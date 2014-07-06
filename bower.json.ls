@@ -8,7 +8,6 @@ dependencies:
   "commonjs-require-definition": "~0.1.2"
   angular: "1.2.14"
   "angular-mocks": "1.2.14"
-  "angular-scenario": "1.2.14"
   "angular-ui-router": "0.2.10"
 
 overrides:
