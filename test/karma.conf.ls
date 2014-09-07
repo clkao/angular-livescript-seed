@@ -21,3 +21,13 @@ module.exports = (karma) ->
     preprocessors:
       '**/*.ls': ['live']
     singleRun: false
+
+module.exports.karma-deps = do
+  'karma': '^0.12.23'
+  'karma-live-preprocessor': '^0.2.2'
+  'karma-mocha': '~0.1.0'
+  'karma-chai': '^0.1.0'
+  'karma-ng-scenario': '0.1.0'
+  'karma-phantomjs-launcher': '~0.1.0'
+  'mocha': '^1.21.4'
+  'chai': '^1.9.0'
