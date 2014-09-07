@@ -22,7 +22,7 @@ gulp.task 'httpServer' ->
   http-server := require 'http' .create-server app
   port = 3333
   http-server.listen port, ->
-    console.log "Running on http://localhost:#port"
+    gutil.log "Running on " + gutil.colors.bold.inverse "http://localhost:#port"
 
 gulp.task 'webdriver_update' webdriver_update
 
@@ -72,14 +72,18 @@ gulp.task 'test:karma' (done) ->
     single-run: true
   }, done
 
-gulp.task 'dev' <[httpServer template assets js:vendor js:app css]> (done) ->
+gulp.task 'dev' <[template assets js:vendor js:app css]> (done) ->
+  gulp.start 'httpServer'
   gulp.watch ['app/**/*.jade'] <[template]>
   gulp.watch ['app/**/*.ls', 'app/**/*.jsenv'] <[js:app]>
   gulp.watch 'app/assets/**' <[assets]>
   gulp.watch 'app/**/*.styl' <[css]>
   require 'karma' .server.start {
     config-file: __dirname + '/test/karma.conf.ls',
-  }, done
+  }, ->
+    done!
+    process.exit!
+
 
 require! <[gulp-angular-templatecache gulp-jade]>
 gulp.task 'template' <[index]> ->
