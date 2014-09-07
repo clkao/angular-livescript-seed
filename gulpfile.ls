@@ -1,6 +1,7 @@
 require! <[tiny-lr]>
 require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue gulp-if]>
 gutil = gulp-util
+require! nib
 {protractor, webdriver_update} = require 'gulp-protractor'
 
 livereload-server = require('tiny-lr')!
@@ -17,7 +18,7 @@ gulp.task 'httpServer' ->
   app.use require('connect-livereload')!
   app.use '/' express.static "_public"
   app.all '/**' (req, res, next) ->
-    res.sendfile __dirname + '/_public/index.html'
+    res.send-file __dirname + '/_public/index.html'
   # use http-server here so we can close after protractor finishes
   http-server := require 'http' .create-server app
   port = 3333
@@ -76,6 +77,7 @@ gulp.task 'test:karma' ->
   .pipe gulp-karma do
     config-file: 'test/karma.conf.ls'
     action: 'run'
+    single-run: true
     browsers: <[PhantomJS]>
   .on 'error' ->
     console.log it
@@ -154,7 +156,7 @@ gulp.task 'css' <[bower]> ->
 
   styl = gulp.src './app/styles/**/*.styl'
     .pipe gulp-filter -> it.path isnt /\/_[^/]+\.styl$/
-    .pipe gulp-stylus use: <[nib]>
+    .pipe gulp-stylus use: [nib!]
 
   s = streamqueue { +objectMode }
     .done bower, styl, gulp.src 'app/styles/**/*.css'
@@ -168,24 +170,29 @@ gulp.task 'assets' ->
     .pipe gulp.dest '_public'
 
 export gulp-deps = do
-  "gulp": '~3.8.0'
-  "gulp-util": '~2.2.13'
-  "gulp-exec": '~1.0.4'
-  "gulp-protractor": '^0.0.7'
-  "gulp-livescript": '~0.1.1'
-  "gulp-stylus": '~0.0.12'
-  "gulp-concat": '~2.1.7'
-  "gulp-jade": '~0.4.1'
+  "gulp": '^3.8.0'
+  "gulp-util": '^3.0.1'
+  "gulp-exec": '^2.1.0'
+  "gulp-protractor": '^0.0.11'
+  "gulp-livescript": '^1.0.3'
+  "gulp-stylus": '^1.3.0'
+  "gulp-concat": '^2.4.0'
+  "gulp-jade": '^0.7.0'
   "gulp-angular-templatecache": '^1.1.0'
   "gulp-bower": '~0.0.2'
   "main-bower-files": '^1.0.1'
-  "gulp-uglify": '~0.2.1'
+  "gulp-uglify": '^1.0.1'
   "gulp-csso": '~0.2.6'
-  "gulp-filter": '~0.2.1'
-  "gulp-mocha": '~0.4.1'
+  "gulp-filter": '^1.0.1'
+  "gulp-mocha": '^1.0.0'
   "gulp-karma": '^0.0.4'
-  "gulp-livereload": '~1.1.1'
+  "gulp-livereload": '^2.1.1'
   "gulp-json-editor": "^2.0.2"
   "gulp-commonjs": "^0.1.0"
-  "gulp-insert": "^0.2.0"
-  "gulp-if": '~0.0.5'
+  "gulp-insert": "^0.4.0"
+  "gulp-if": '^1.2.4'
+  "streamqueue": '^0.1.1'
+  "connect-livereload": '^0.4.0'
+  "tiny-lr": '^0.1.1'
+  "express": '^4.8.8'
+  "nib": '^1.0.3'

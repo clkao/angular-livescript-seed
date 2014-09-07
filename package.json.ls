@@ -1,4 +1,5 @@
 #!/usr/bin/env lsc -cj
+_: 'Do not edit, generated from package.json.ls'
 author: 'Chia-liang Kao'
 name: 'angular-livescript-seed'
 description: 'ultra-modern angular seed with livescript'
@@ -19,10 +20,6 @@ scripts:
 dependencies: {}
 devDependencies: require \./gulpfile.ls .gulp-deps <<<
   require \./test/karma.conf.ls .karma-deps <<< do
-    express: '3.4.x'
-    LiveScript: '1.2.x'
-    'bower': '1.3.x'
-    'protractor': '~0.18.1'
-    "streamqueue": '~0.0.5'
-    "connect-livereload": '~0.3.2'
-    "tiny-lr": '~0.0.5'
+    'LiveScript': '1.2.0'
+    'bower': '^1.3.9'
+    'protractor': '^1.2.0'
