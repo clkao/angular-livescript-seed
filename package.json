@@ -42,6 +42,7 @@
     "gulp-commonjs": "^0.1.0",
     "gulp-insert": "^0.4.0",
     "gulp-if": "^1.2.4",
+    "gulp-plumber": "^0.6.5",
     "streamqueue": "^0.1.1",
     "connect-livereload": "^0.4.0",
     "tiny-lr": "^0.1.1",
