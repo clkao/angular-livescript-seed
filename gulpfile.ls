@@ -1,7 +1,6 @@
-require! <[tiny-lr]>
-require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue gulp-if]>
+require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if]>
 gutil = gulp-util
-require! nib
+require! <[nib]>
 {protractor, webdriver_update} = require 'gulp-protractor'
 
 livereload-server = require('tiny-lr')!
@@ -64,33 +63,23 @@ gulp.task 'test:sauce' <[protractor:sauce]> ->
 gulp.task 'build' <[template bower assets js:vendor js:app css]>
 
 gulp.task 'test:unit' <[build]> ->
-  gulp.start 'test:karma'
+  gulp.start 'test:karma' ->
+    process.exit!
 
-gulp.task 'test:karma' ->
-  gulp.src [
-    * "_public/js/vendor.js"
-    * "_public/js/app.templates.js"
-    * "_public/js/app.js"
-    * "bower_components/angular-mocks/angular-mocks.js"
-    * "test/unit/**/*.spec.ls"
-  ]
-  .pipe gulp-karma do
-    config-file: 'test/karma.conf.ls'
-    action: 'run'
+gulp.task 'test:karma' (done) ->
+  require 'karma' .server.start {
+    config-file: __dirname + '/test/karma.conf.ls',
     single-run: true
-    browsers: <[PhantomJS]>
-  .on 'error' ->
-    console.log it
-    throw it
+  }, done
 
-gulp.task 'dev' <[httpServer template assets js:vendor js:app css]> ->
-  LIVERELOADPORT = 35729
-  livereload-server.listen LIVERELOADPORT, ->
-    return gutil.log it if it
+gulp.task 'dev' <[httpServer template assets js:vendor js:app css]> (done) ->
   gulp.watch ['app/**/*.jade'] <[template]>
   gulp.watch ['app/**/*.ls', 'app/**/*.jsenv'] <[js:app]>
   gulp.watch 'app/assets/**' <[assets]>
   gulp.watch 'app/**/*.styl' <[css]>
+  require 'karma' .server.start {
+    config-file: __dirname + '/test/karma.conf.ls',
+  }, done
 
 require! <[gulp-angular-templatecache gulp-jade]>
 gulp.task 'template' <[index]> ->
@@ -185,7 +174,6 @@ export gulp-deps = do
   "gulp-csso": '~0.2.6'
   "gulp-filter": '^1.0.1'
   "gulp-mocha": '^1.0.0'
-  "gulp-karma": '^0.0.4'
   "gulp-livereload": '^2.1.1'
   "gulp-json-editor": "^2.0.2"
   "gulp-commonjs": "^0.1.0"
