@@ -22,7 +22,7 @@ gulp.task 'httpServer' ->
   http-server := require 'http' .create-server app
   port = 3333
   http-server.listen port, ->
-    console.log "Running on http://localhost:#port"
+    gutil.log "Running on " + gutil.colors.bold.inverse "http://localhost:#port"
 
 gulp.task 'webdriver_update' webdriver_update
 
