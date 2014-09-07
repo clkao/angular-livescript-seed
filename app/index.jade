@@ -1,6 +1,7 @@
 doctype html
 html(ng-app='App')
   head
+    base(href="/")
     meta(charset='utf-8')
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -19,9 +20,9 @@ html(ng-app='App')
     script(src='//cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/javascript/semantic.min.js')
     script(src='/js/app.templates.js')
     script(src='/js/app.js')
-  body(ng-controller='AppCtrl',ng-cloak)
+  body(ng-controller='AppCtrl',ng-cloak,layout="vertical",layout-fill)
     include partials/nav.jade
-    section#container.container
+    material-content.material-content-padding#container.container
       div(ui-view)
   - if (typeof(googleAnalytics) !== 'undefined')
     script(type="text/javascript").
