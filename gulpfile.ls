@@ -1,8 +1,13 @@
-require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if]>
+require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if gulp-plumber]>
 gutil = gulp-util
 require! <[nib]>
 {protractor, webdriver_update} = require 'gulp-protractor'
 
+dev = gutil.env._.0 is \dev
+plumber = ->
+  gulp-plumber error-handler: ->
+    gutil.beep!
+    gutil.log gutil.colors.red it.toString!
 livereload-server = require('tiny-lr')!
 livereload = -> gulp-livereload livereload-server
 
@@ -88,6 +93,7 @@ gulp.task 'dev' <[template assets js:vendor js:app css]> (done) ->
 require! <[gulp-angular-templatecache gulp-jade]>
 gulp.task 'template' <[index]> ->
   gulp.src ['app/partials/**/*.jade']
+    .pipe gulp-if dev, plumber!
     .pipe gulp-jade!
     .pipe gulp-angular-templatecache 'app.templates.js' do
       base: process.cwd()
@@ -95,7 +101,7 @@ gulp.task 'template' <[index]> ->
       module: 'app.templates'
       standalone: true
     .pipe gulp.dest '_public/js'
-    .pipe livereload!
+    .pipe gulp-if dev, livereload!
 
 gulp.task 'index' ->
   pretty = 'yes' if gutil.env.env isnt \production
@@ -106,7 +112,7 @@ gulp.task 'index' ->
       locals:
         googleAnalytics: google-analytics
     .pipe gulp.dest '_public'
-    .pipe livereload!
+    .pipe gulp-if dev, livereload!
 
 require! <[gulp-bower main-bower-files gulp-filter gulp-uglify gulp-csso]>
 require! <[gulp-concat gulp-json-editor gulp-commonjs gulp-insert]>
@@ -124,6 +130,7 @@ gulp.task 'js:app' ->
     .pipe gulp-commonjs!
 
   app = gulp.src 'app/**/*.ls'
+    .pipe gulp-if dev, plumber!
     .pipe gulp-livescript({+bare}).on 'error', gutil.log
 
   s = streamqueue { +objectMode }
@@ -131,6 +138,7 @@ gulp.task 'js:app' ->
     .pipe gulp-concat 'app.js'
     .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest '_public/js'
+    .pipe gulp-if dev, livereload!
 
 gulp.task 'js:vendor' <[bower]> ->
   bower = gulp.src main-bower-files!
@@ -141,7 +149,7 @@ gulp.task 'js:vendor' <[bower]> ->
     .pipe gulp-concat 'vendor.js'
     .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest '_public/js'
-    .pipe livereload!
+    .pipe gulp-if dev, livereload!
 
 gulp.task 'css' <[bower]> ->
   bower = gulp.src main-bower-files!
@@ -156,7 +164,7 @@ gulp.task 'css' <[bower]> ->
     .pipe gulp-concat 'app.css'
     .pipe gulp-if production, gulp-csso!
     .pipe gulp.dest './_public/css'
-    .pipe livereload!
+    .pipe gulp-if dev, livereload!
 
 gulp.task 'assets' ->
   gulp.src 'app/assets/**'
@@ -183,6 +191,7 @@ export gulp-deps = do
   "gulp-commonjs": "^0.1.0"
   "gulp-insert": "^0.4.0"
   "gulp-if": '^1.2.4'
+  "gulp-plumber": "^0.6.5"
   "streamqueue": '^0.1.1'
   "connect-livereload": '^0.4.0'
   "tiny-lr": '^0.1.1'
