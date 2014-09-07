@@ -113,7 +113,7 @@ gulp.task 'index' ->
     .pipe gulp.dest '_public'
     .pipe livereload!
 
-require! <[gulp-bower gulp-bower-files gulp-filter gulp-uglify gulp-csso]>
+require! <[gulp-bower main-bower-files gulp-filter gulp-uglify gulp-csso]>
 require! <[gulp-concat gulp-json-editor gulp-commonjs gulp-insert]>
 
 gulp.task 'bower' ->
@@ -138,7 +138,7 @@ gulp.task 'js:app' ->
     .pipe gulp.dest '_public/js'
 
 gulp.task 'js:vendor' <[bower]> ->
-  bower = gulp-bower-files!
+  bower = gulp.src main-bower-files!
     .pipe gulp-filter -> it.path is /\.js$/
 
   s = streamqueue { +objectMode }
@@ -149,7 +149,7 @@ gulp.task 'js:vendor' <[bower]> ->
     .pipe livereload!
 
 gulp.task 'css' <[bower]> ->
-  bower = gulp-bower-files!
+  bower = gulp.src main-bower-files!
     .pipe gulp-filter -> it.path is /\.css$/
 
   styl = gulp.src './app/styles/**/*.styl'
