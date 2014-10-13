@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc -cj
-angular-version = '1.3.0-build.3211+sha.0f3adec'
+angular-version = '1.3.0-rc.4'
 
 name: "angular-livescript-seed"
 repo: "clkao/angular-livescript-seed"
@@ -12,7 +12,7 @@ dependencies:
   angular: angular-version
   "angular-mocks": angular-version
   "angular-scenario": angular-version
-  "angular-material": "0.0.2"
+  "angular-material": "0.4.0"
   "angular-ui-router": "0.2.11"
 
 overrides:
