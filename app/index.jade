@@ -20,9 +20,9 @@ html(ng-app='App')
     script(src='//cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/javascript/semantic.min.js')
     script(src='/js/app.templates.js')
     script(src='/js/app.js')
-  body(ng-controller='AppCtrl',ng-cloak,layout="vertical",layout-fill)
+  body(ng-controller='AppCtrl',ng-cloak,layout="column",layout-fill)
     include partials/nav.jade
-    material-content.material-content-padding#container.container
+    md-content.md-padding#container.container
       div(ui-view)
   - if (typeof(googleAnalytics) !== 'undefined')
     script(type="text/javascript").

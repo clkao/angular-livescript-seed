@@ -1,11 +1,12 @@
-material-toolbar.material-theme-light(scroll-shrink)
-  .material-toolbar-tools
+md-toolbar.md-default-theme
+  .md-toolbar-tools(md-scroll-shrink)
     h2
       a.left.floated.item.header.brand(href='/') Angular/LiveScript
       a.right.floated.item.branding(href='http://livescript.net', target='_blank')
         img(src='http://livescript.net/images/icon.png')
-    h3
+    h3.md-toolbar-item
       a.item(ng-href='/', ng-class="{active:activeTab == ''}") Home
-    h3.right.floated.menu
+    span.menu-separator-icon
+    h3.right.floated.menu.md-toolbar-item
       a.item.about(ng-href="/about", ng-class="{active:activeTab == 'about'}") 關於
     a.ui.top.right.attached.label.build-id(href="http://github.com/clkao/angular-livescript-seed") {{ config_build }}
