@@ -12,7 +12,7 @@ dependencies:
   angular: angular-version
   "angular-mocks": angular-version
   "angular-scenario": angular-version
-  "angular-material": "0.7.0"
+  "angular-material": "^0.8.3"
   "angular-ui-router": "0.2.11"
 
 overrides:
