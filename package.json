@@ -26,7 +26,7 @@
     "gulp-util": "^3.0.1",
     "gulp-exec": "^2.1.0",
     "gulp-protractor": "^0.0.11",
-    "gulp-livescript": "^1.0.3",
+    "gulp-livescript": "git://github.com/yhsiang/gulp-livescript#sourcemap",
     "gulp-stylus": "^1.3.0",
     "gulp-concat": "^2.4.0",
     "gulp-jade": "^0.7.0",
@@ -57,7 +57,7 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "mocha": "^1.21.4",
     "chai": "^1.9.0",
-    "LiveScript": "1.2.0",
+    "LiveScript": "git://github.com/gkz/LiveScript.git",
     "bower": "^1.3.9",
     "protractor": "^1.2.0"
   }

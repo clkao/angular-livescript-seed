@@ -131,7 +131,9 @@ gulp.task 'js:app' ->
 
   app = gulp.src 'app/**/*.ls'
     .pipe gulp-if dev, plumber!
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-livescript({+bare}).on 'error', gutil.log
+    .pipe gulp-if !production, gulp-sourcemaps.write!
 
   s = streamqueue { +objectMode }
     .done env, app
@@ -178,7 +180,7 @@ export gulp-deps = do
   "gulp-util": '^3.0.1'
   "gulp-exec": '^2.1.0'
   "gulp-protractor": '^0.0.11'
-  "gulp-livescript": '^1.0.3'
+  "gulp-livescript": 'git://github.com/yhsiang/gulp-livescript#sourcemap'
   "gulp-stylus": '^1.3.0'
   "gulp-concat": '^2.4.0'
   "gulp-jade": '^0.7.0'

@@ -20,6 +20,6 @@ scripts:
 dependencies: {}
 devDependencies: require \./gulpfile.ls .gulp-deps <<<
   require \./test/karma.conf.ls .karma-deps <<< do
-    'LiveScript': '1.2.0'
+    'LiveScript': 'git://github.com/gkz/LiveScript.git'
     'bower': '^1.3.9'
     'protractor': '^1.2.0'
