@@ -165,7 +165,7 @@ gulp.task 'css' <[bower]> ->
     .done bower, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
     .pipe gulp-if production, gulp-csso!
-    .pipe gulp-sourcemaps.write!
+    .pipe gulp-if !production, gulp-sourcemaps.write!
     .pipe gulp.dest './_public/css'
     .pipe gulp-if dev, livereload!
 
