@@ -43,6 +43,7 @@
     "gulp-insert": "^0.4.0",
     "gulp-if": "^1.2.4",
     "gulp-plumber": "^0.6.5",
+    "gulp-sourcemaps": "^1.5.1",
     "streamqueue": "^0.1.1",
     "connect-livereload": "^0.4.0",
     "tiny-lr": "^0.1.1",
