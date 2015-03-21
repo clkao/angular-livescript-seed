@@ -1,4 +1,4 @@
-require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if gulp-plumber]>
+require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if gulp-plumber gulp-sourcemaps]>
 gutil = gulp-util
 require! <[nib]>
 {protractor, webdriver_update} = require 'gulp-protractor'
@@ -153,16 +153,19 @@ gulp.task 'js:vendor' <[bower]> ->
 
 gulp.task 'css' <[bower]> ->
   bower = gulp.src main-bower-files!
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-filter -> it.path is /\.css$/
 
   styl = gulp.src './app/styles/**/*.styl'
     .pipe gulp-filter -> it.path isnt /\/_[^/]+\.styl$/
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-stylus use: [nib!]
 
   s = streamqueue { +objectMode }
     .done bower, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
     .pipe gulp-if production, gulp-csso!
+    .pipe gulp-sourcemaps.write!
     .pipe gulp.dest './_public/css'
     .pipe gulp-if dev, livereload!
 
@@ -192,6 +195,7 @@ export gulp-deps = do
   "gulp-insert": "^0.4.0"
   "gulp-if": '^1.2.4'
   "gulp-plumber": "^0.6.5"
+  "gulp-sourcemaps": "^1.5.1"
   "streamqueue": '^0.1.1'
   "connect-livereload": '^0.4.0'
   "tiny-lr": '^0.1.1'
