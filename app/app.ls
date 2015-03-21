@@ -1,6 +1,6 @@
 # Declare app level module which depends on filters, and services
 
-angular.module "App" <[app.templates ui.router]>
+angular.module "App" <[app.templates ngMaterial ui.router]>
 
 .config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider

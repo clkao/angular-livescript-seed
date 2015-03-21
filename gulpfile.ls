@@ -1,4 +1,4 @@
-require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if gulp-plumber]>
+require! <[gulp gulp-util gulp-stylus gulp-livereload gulp-livescript streamqueue gulp-if gulp-plumber gulp-sourcemaps]>
 gutil = gulp-util
 require! <[nib]>
 {protractor, webdriver_update} = require 'gulp-protractor'
@@ -131,7 +131,9 @@ gulp.task 'js:app' ->
 
   app = gulp.src 'app/**/*.ls'
     .pipe gulp-if dev, plumber!
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-livescript({+bare}).on 'error', gutil.log
+    .pipe gulp-if !production, gulp-sourcemaps.write!
 
   s = streamqueue { +objectMode }
     .done env, app
@@ -153,16 +155,19 @@ gulp.task 'js:vendor' <[bower]> ->
 
 gulp.task 'css' <[bower]> ->
   bower = gulp.src main-bower-files!
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-filter -> it.path is /\.css$/
 
   styl = gulp.src './app/styles/**/*.styl'
     .pipe gulp-filter -> it.path isnt /\/_[^/]+\.styl$/
+    .pipe gulp-sourcemaps.init!
     .pipe gulp-stylus use: [nib!]
 
   s = streamqueue { +objectMode }
     .done bower, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
     .pipe gulp-if production, gulp-csso!
+    .pipe gulp-if !production, gulp-sourcemaps.write!
     .pipe gulp.dest './_public/css'
     .pipe gulp-if dev, livereload!
 
@@ -175,7 +180,7 @@ export gulp-deps = do
   "gulp-util": '^3.0.1'
   "gulp-exec": '^2.1.0'
   "gulp-protractor": '^0.0.11'
-  "gulp-livescript": '^1.0.3'
+  "gulp-livescript": 'git://github.com/yhsiang/gulp-livescript#sourcemap'
   "gulp-stylus": '^1.3.0'
   "gulp-concat": '^2.4.0'
   "gulp-jade": '^0.7.0'
@@ -192,6 +197,7 @@ export gulp-deps = do
   "gulp-insert": "^0.4.0"
   "gulp-if": '^1.2.4'
   "gulp-plumber": "^0.6.5"
+  "gulp-sourcemaps": "^1.5.1"
   "streamqueue": '^0.1.1'
   "connect-livereload": '^0.4.0'
   "tiny-lr": '^0.1.1'
